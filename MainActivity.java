@@ -68,41 +68,49 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        month.setOnValueChangedListener(new android.widget.NumberPicker.OnValueChangeListener() {
+         month.setOnValueChangedListener(new android.widget.NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(android.widget.NumberPicker picker, int oldVal, int newVal) {
-
-
-
-// Get the number of days in that month
                 currmonth = newVal;
-                YearMonth yearMonthObject = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    yearMonthObject = YearMonth.of(curryear, currmonth);
-                    int daysInMonth = yearMonthObject.lengthOfMonth(); //28
-                    System.out.println("QQQQQQdays : "+daysInMonth);
-                    totaldays = daysInMonth;
-                    date.setMaxValue(totaldays);
+
+                if (currmonth == months+1){
+                    date.setMaxValue(dates+1);
                     date.setMinValue(c.getActualMinimum(Calendar.DAY_OF_MONTH));
                     date.setWrapSelectorWheel(false);
                 }else {
+                    // Get the number of days in that month
+                    YearMonth yearMonthObject = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        yearMonthObject = YearMonth.of(curryear, currmonth);
+                        int daysInMonth = yearMonthObject.lengthOfMonth(); //28
+                        System.out.println("QQQQQQdays : "+daysInMonth);
+                        totaldays = daysInMonth;
+                        date.setMaxValue(totaldays);
+                        date.setMinValue(c.getActualMinimum(Calendar.DAY_OF_MONTH));
+                        date.setWrapSelectorWheel(false);
+                    }else {
 
-                    int iDay = 1;
+                        int iDay = 1;
 
 // Create a calendar object and set year and month
-                    Calendar mycal = new GregorianCalendar(curryear, currmonth, iDay);
+                        Calendar mycal = new GregorianCalendar(curryear, currmonth, iDay);
 
 // Get the number of days in that month
-                    daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH); // 2
-                    totaldays = daysInMonth;
+                        daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH); // 2
+                        totaldays = daysInMonth;
 
-                    date.setMaxValue(totaldays);
-                    date.setMinValue(c.getActualMinimum(Calendar.DAY_OF_MONTH));
-                    date.setWrapSelectorWheel(false);
+                        date.setMaxValue(totaldays);
+                        date.setMinValue(c.getActualMinimum(Calendar.DAY_OF_MONTH));
+                        date.setWrapSelectorWheel(false);
 
+                    }
                 }
+
+
             }
         });
+        
+        
         date.setOnValueChangedListener(new android.widget.NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(android.widget.NumberPicker picker, int oldVal, int newVal) {
